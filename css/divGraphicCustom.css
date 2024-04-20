@@ -1,0 +1,49 @@
+/* DivGraphic 相关的样式 */
+
+/**************** 一个黑色面板，指向左下角黄色连线 ****************/
+.marsBluePanel {
+    min-width: 90px;
+    min-height: 35px;
+    position: absolute;
+    left: 16px;
+    bottom: 31px;
+    cursor: default;
+    border-radius: 4px;
+    opacity: 0.96;
+    border: 0px solid #29baf1;
+    box-shadow: 0px 2px 21px 0px rgba(41, 186, 241, 0.55);
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: rgba(41, 186, 241, 0.60);
+}
+
+.marsBluePanel::before {
+    content: "";
+    width: calc(100% + 22px);
+    height: 39px;
+    position: absolute;
+    bottom: -39px;
+    left: -22px;
+    background: url("../img/icon/popupLbl.png") 0px 0px no-repeat;
+    background-position: 0px 0px;
+}
+
+.marsBluePanel-text {
+    width: 100%;
+    height: 100%;
+    min-height: 33px;
+    text-align: center;
+    padding: 10px 5px 0 5px;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    border: 0px solid #ffffff4f;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+.marsBluePanel-highlight {
+    border: 2px solid yellow;
+}
