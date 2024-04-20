@@ -1,30 +1,33 @@
-/**
- * 驱离
- */
-let DriveAway = (function () {
+class DriveAway{
 
-    function DriveAway(options) {
-        this.map = undefined;
-        this.graphicLayer = undefined;
-        this.positionProperty = undefined;
-        this.orientationProperty = undefined;
 
-        let defaultOptions = {
-            position: { // 驱离后无人机位置
-                time: '2024-01-22 12:00:30.000',
-                lng: 117.1450,
-                lat: 31.8687,
-                height: 1200,
-            }
-        }
+    /**
+     * 驱离
+     * @param {*} options.map 地图对象 
+     * @param {*} options.graphicLayer 图层
+     * @param {*} options.positionProperty 位置property
+     * @param {*} options.orientationProperty 姿态property
+     * @param {*} options.position 驱离后无人机位置
+     */
+    constructor(options){
 
-        options = Object.assign(defaultOptions, options);
-        Object.assign(this, options);
+        this.map = options.map;
+        this.graphicLayer = options.graphicLayer;
+        this.positionProperty = options.positionProperty;
+        this.orientationProperty = options.orientationProperty;
+        this.position = options.position;
 
         this.create(this.position);
+
     }
 
-    DriveAway.prototype.create = function (pos) {
+
+      /**
+     * 驱离动画效果
+     * @param {*} pos 
+     */
+      create(pos){
+
         let dateTime = string2Date(pos.time);
         let time = Cesium.JulianDate.fromDate(dateTime)
         let targetPosition = Cesium.Cartesian3.fromDegrees(pos.lng, pos.lat, pos.height);
@@ -37,8 +40,7 @@ let DriveAway = (function () {
                 Cesium.Math.toRadians(pos.roll || 0)
             )
         ));
+
     }
 
-    return DriveAway;
-})()
-
+}
