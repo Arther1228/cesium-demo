@@ -1,28 +1,29 @@
-/**
- * 追踪无人机
- */
-let DroneTrack = (function () {
+class DroneTrack{
 
-    function DroneTrack(options) {
-        this.map = undefined;
-        this.graphicLayer = undefined;
+    /**
+     * 追踪无人机
+     * @param {*} options.map 地图对象 
+     * @param {*} options.graphicLayer 图层
+     * @param {*} options.position position属性
+     * @param {*} options.targetPosition targetPosition属性
+     */
+    constructor(options){
 
-        let defaultOptions = {
-            type: 1, // 1波纹纹理 2颜色纹理
-            position: undefined,
-            targetPosition: undefined,
-            angle: 5,
-        }
+        this.map = options.map;
+        this.graphicLayer = options.graphicLayer;
+        this.position = options.position;
+        this.targetPosition = options.targetPosition;
 
-        options = Object.assign(defaultOptions, options);
-        Object.assign(this, options);
-
-        this.coneTrack = undefined;
-
-        this.create();
+        this.coneTrack = this.create();
     }
 
-    DroneTrack.prototype.create = function () {
+
+    /**
+     * 扫描效果
+     * @returns 
+     */
+    create(){
+
         let coneTrack;
         if (this.type == 1) {
             coneTrack = new mars3d.graphic.ConeTrack({
@@ -58,14 +59,17 @@ let DroneTrack = (function () {
             })
         }
         this.graphicLayer.addGraphic(coneTrack);
-        this.coneTrack = coneTrack;
+
+        return coneTrack;
+
     }
 
-    DroneTrack.prototype.dispose = function () {
+
+    dispose(){
+
         if (this.coneTrack) {
             this.graphicLayer.removeGraphic(this.coneTrack)
         }
-    }
 
-    return DroneTrack;
-})()
+    }
+}
