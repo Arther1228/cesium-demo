@@ -20,9 +20,7 @@ class Label {
         this.height = options.height,
         this.text = options.text;
 
-        this.graphic = undefined;
-
-        this.createLabel();
+        this.graphic = this.createLabel();
 
     }
 
@@ -32,7 +30,7 @@ class Label {
      */
     createLabel() {
 
-        let divGraphic;
+        let labelGraphic;
 
         if (this.type == 1) {
             let html = `<div class="marsTiltPanel marsTiltPanel-theme-red">
@@ -65,7 +63,7 @@ class Label {
                             </div>
                             <div class="arrow" ></div>
                         </div>`;
-            divGraphic = new mars3d.graphic.DivGraphic({
+            labelGraphic = new mars3d.graphic.DivGraphic({
                 position: [this.lng, this.lat, this.height],
                 style: {
                     html: html,
@@ -83,7 +81,7 @@ class Label {
                             <div class="marsBluePanel-text">{text}</div>
                         </div>`;
             html = html.replace('{text}', this.text);
-            divGraphic = new mars3d.graphic.DivGraphic({
+            labelGraphic = new mars3d.graphic.DivGraphic({
                 position: [this.lng, this.lat, this.height],
                 style: {
                     html: html,
@@ -97,8 +95,9 @@ class Label {
             });
         }
 
-        this.graphicLayer.addGraphic(divGraphic);
-        this.graphic = divGraphic;
+        this.graphicLayer.addGraphic(labelGraphic);
+
+        return labelGraphic;
     }
 
 

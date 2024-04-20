@@ -1,28 +1,39 @@
-/**
- * 车辆模型
- */
-let Vehicle = (function () {
+class Vehicle {
 
-    function Vehicle(options) {
-        this.map = undefined;
-        this.graphicLayer = undefined;
-        this.lng = 60;
-        this.lat = 80;
-        this.height = 44;
-        this.heading = 25;
+    /**
+     * 车辆模型
+     * @param {*} options.map 地图对象 
+     * @param {*} options.graphicLayer 图层
+     * @param {*} options.lng 经度 
+     * @param {*} options.map 维度 
+     * @param {*} options.map 高度 
+     * @param {*} options.map 朝向 
+     * @param {*} options.map 数据ID 
+     */
+    constructor(options) {
+
+        this.map = options.map;
+        this.graphicLayer = options.graphicLayer,
+        this.lng = options.lng,
+        this.lat = options.lat,
+        this.height = options.height,
+        this.heading = options.heading,
+        this.dataId = options.dataId;
+        
         this.modelType = 1; // 模型类型
+        this.graphic = this.loadModel();
 
-        let self = this;
-        self = Object.assign(this, options);
-
-        this.graphic = undefined;
-
-        this.loadModel();
     }
 
-    Vehicle.prototype.loadModel = function () {
+    /**
+     * 创建模型
+     */
+    loadModel() {
+
+        let vehicleGraphic;
+
         if (this.modelType == 1) {
-            let graphic = new mars3d.graphic.ModelEntity({
+            vehicleGraphic = new mars3d.graphic.ModelEntity({
                 position: [this.lng, this.lat, this.height],
                 style: {
                     url: 'gltf/汽车.glb',
@@ -32,9 +43,8 @@ let Vehicle = (function () {
                 },
                 dataId: this.dataId,
             })
-            this.graphicLayer.addGraphic(graphic)
-            this.graphic = graphic;
-            graphic.bindContextMenu([ //绑定右键菜单
+
+            vehicleGraphic.bindContextMenu([ //绑定右键菜单
                 {
                     text: "目标模拟器对抗状态测试及显控设备载车&nbsp;&nbsp;",
                     icon: "fa fa-trash-o",
@@ -60,17 +70,24 @@ let Vehicle = (function () {
         } else if (this.modelType == 2) {
 
         }
+
+        this.graphicLayer.addGraphic(vehicleGraphic)
+
+        return vehicleGraphic;
     }
 
-    Vehicle.prototype.dispose = function () {
+
+    dispose(){
+
         if (this.graphic) {
             this.graphicLayer.removeGraphic(this.graphic);
         }
+
     }
 
-    Vehicle.prototype.menuClick = function (graphic) {
+    menuClick(graphic){
+
         alert(graphic.options.dataId);
+        
     }
-
-    return Vehicle;
-})();
+}
