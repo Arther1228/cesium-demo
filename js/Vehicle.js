@@ -13,11 +13,11 @@ class Vehicle {
     constructor(options) {
 
         this.map = options.map;
-        this.graphicLayer = options.graphicLayer,
-        this.lng = options.lng,
-        this.lat = options.lat,
-        this.height = options.height,
-        this.heading = options.heading,
+        this.graphicLayer = options.graphicLayer;
+        this.lng = options.lng;
+        this.lat = options.lat;
+        this.height = options.height;
+        this.heading = options.heading;
         this.dataId = options.dataId;
         
         this.modelType = 1; // 模型类型

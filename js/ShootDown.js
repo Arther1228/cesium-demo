@@ -1,30 +1,31 @@
-/**
- * 击落
- */
-let ShootDown = (function () {
+class ShootDown {
+    
+    /**
+     * 击落
+     * @param {*} options.map 地图对象 
+     * @param {*} options.graphicLayer 图层
+     * @param {*} options.positionProperty 位置property
+     * @param {*} options.orientationProperty 姿态property
+     * @param {*} options.position 击落后的位置
+     */
+    constructor(options){
 
-    function ShootDown(options) {
-        this.map = undefined;
-        this.graphicLayer = undefined;
-        this.positionProperty = undefined;
-        this.orientationProperty = undefined;
-
-        let defaultOptions = {
-            position: { // 击落后无人机位置
-                time: '2024-01-22 12:00:21.000',
-                lng: 117.1780,
-                lat: 31.8200,
-                height: 44,
-            }
-        }
-
-        options = Object.assign(defaultOptions, options);
-        Object.assign(this, options);
+        this.map = options.map;
+        this.graphicLayer = options.graphicLayer;
+        this.positionProperty = options.positionProperty;
+        this.orientationProperty = options.orientationProperty;
+        this.position = options.position;
 
         this.create(this.position);
+
     }
 
-    ShootDown.prototype.create = function (pos) {
+    /**
+     * 击落动画效果
+     * @param {*} pos 
+     */
+    create(pos){
+
         let dateTime = string2Date(pos.time);
         let time = Cesium.JulianDate.fromDate(dateTime)
         let targetPosition = Cesium.Cartesian3.fromDegrees(pos.lng, pos.lat, pos.height);
@@ -37,7 +38,6 @@ let ShootDown = (function () {
                 Cesium.Math.toRadians(pos.roll || 0)
             )
         ));
-    }
 
-    return ShootDown;
-})()
+    }
+}
