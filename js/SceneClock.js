@@ -1,4 +1,4 @@
-class SceneClock{
+class SceneClock {
 
 
     /**
@@ -6,7 +6,7 @@ class SceneClock{
      * @param {*} options.map  地图对象  
      * @description 最主要的配置是： start stop的起始点时间
      */
-    constructor(options){
+    constructor(options) {
 
         this.map = options.map;
 
@@ -31,7 +31,7 @@ class SceneClock{
     /**
      * 开始动画效果
      */
-    startAnimate(){
+    startAnimate() {
 
         this.map.clock.shouldAnimate = true;
         this.map.clock.currentTime = this.start.clone();

@@ -1,31 +1,27 @@
-/**
- * 无人机
- */
-let DroneSwarm = (function () {
+class DroneSwarm {
 
-    function DroneSwarm(options) {
-        this.map = undefined;
-        this.graphicLayer = undefined;
+    /**
+     * 无人机
+     * @param {*} options.graphicLayer 图层 
+     * @param {*} options.modelType 模型类型 
+     */
+    constructor(options) {
 
-        let defaultOptions = {
-            modelType: 1, // 模型
-        }
+        this.graphicLayer = options.graphicLayer;
+        this.modelType = options.modelType == undefined ? 1 : options.modelType;
 
-        options = Object.assign(defaultOptions, options);
-        Object.assign(this, options);
-
-        this.graphic = undefined; // 生成的模型
-
-        this.create();
-    }
-
-    DroneSwarm.prototype.create = function () {
-        let modelEntity = this.createModelEntity(this.modelType);
-        this.graphic = modelEntity;
+        this.graphic = this.createModelEntity(this.modelType);
         this.graphicLayer.addGraphic(this.graphic);
+
     }
 
-    DroneSwarm.prototype.createModelEntity = function (modelType) {
+
+    /**
+     * 
+     * @param {*} modelType 模型类型
+     */
+    createModelEntity(modelType) {
+
         let modelEntity;
 
         let path = { //实时轨迹显示
@@ -65,14 +61,13 @@ let DroneSwarm = (function () {
         }
 
         return modelEntity;
+
     }
 
-    DroneSwarm.prototype.dispose = function () {
+    dispose() {
         if (this.graphic) {
             this.graphicLayer.removeGraphic(this.graphic);
         }
     }
 
-    return DroneSwarm;
-})();
-
+}
