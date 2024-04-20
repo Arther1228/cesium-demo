@@ -18,10 +18,16 @@ mars3d.Util.fetchJson({ url: configUrl })
 
 let map;
 
-function initMap(mapOptions) {
-    mapOptions.control.clockAnimate = true; // 时钟动画控制(左下角)
-    mapOptions.control.timeline = true;
-    mapOptions.control.compass = { top: "10px", left: "5px" };
+function initMap(options) {
+
+    //合并属性参数，可覆盖config.json中的对应配置
+    var mapOptions = mars3d.Util.merge(options, { 
+      control: {
+          clockAnimate: true, // 时钟动画控制(左下角)
+          timeline: true, //是否显示 时间线控件
+          compass: { top: "10px", left: "5px" }
+      },
+    })
 
     // 创建三维地球场景
     map = new mars3d.Map("mars3dContainer", mapOptions);
