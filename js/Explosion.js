@@ -1,30 +1,35 @@
-/**
- * 驱离
- */
-let Explosion = (function () {
+class Explosion {
 
-    function Explosion(options) {
-        this.map = undefined;
-        this.graphicLayer = undefined;
+    /**
+     * 爆炸
+     * @param {*} options.map 地图对象 
+     * @param {*} options.graphicLayer 图层 
+     * @param {*} options.startTime 开始时间
+     * @param {*} options.endTime 结束时间 
+     * @param {*} options.lng 经度 
+     * @param {*} options.lat 维度 
+     * @param {*} options.height 高度 
+     */
+    constructor(options) {
 
-        let defaultOptions = {
-            startTime: '2024-01-22 12:00:13.000',
-            endTime: '2024-01-22 12:00:15.000',
-            lng: 117.1829,
-            lat: 31.8278,
-            height: 44,
-        }
-
-        options = Object.assign(defaultOptions, options);
-        Object.assign(this, options);
+        this.map = options.map;
+        this.graphicLayer = options.graphicLayer;
+        this.startTime = options.startTime;
+        this.endTime = options.endTime;
+        this.lng = options.lng;
+        this.lat = options.lat;
+        this.height = options.height;
 
         this.viewer = this.map.viewer;
         this.scene = this.viewer.scene;
 
         this.create();
+
     }
 
-    Explosion.prototype.create = function () {
+
+    create() {
+
         this.viewModel = {
             emissionRate: 20,
             gravity: 9.0,//设置重力参数
@@ -46,7 +51,8 @@ let Explosion = (function () {
         this.init();
     }
 
-    Explosion.prototype.init = function () {
+    init() {
+
         this.particleSystem = this.scene.primitives.add(
             new Cesium.ParticleSystem({
                 image: 'img/explosion5.png',//生成所需粒子的图片路径
@@ -81,8 +87,8 @@ let Explosion = (function () {
         this.preUpdateEvent();
     }
 
-    // 场景渲染事件
-    Explosion.prototype.preUpdateEvent = function () {
+    preUpdateEvent() {
+
         this.viewer.scene.preUpdate.addEventListener((scene, time) => {
             if (!this.particleSystem) return;
 
@@ -97,13 +103,17 @@ let Explosion = (function () {
                 this.viewModel.roll += 1.0;
             }
         });
+
     }
 
-    Explosion.prototype.computeModelMatrix = function (entity, time) {
+
+    computeModelMatrix(entity, time) {
+
         return entity.computeModelMatrix(time, new Cesium.Matrix4());
     }
 
-    Explosion.prototype.computeEmitterModelMatrix = function () {
+    computeEmitterModelMatrix() {
+
         let hpr = Cesium.HeadingPitchRoll.fromDegrees(0, 0, 0);
         let trs = new Cesium.TranslationRotationScale();
         trs.translation = Cesium.Cartesian3.fromElements(0, 20, 0);
@@ -112,12 +122,13 @@ let Explosion = (function () {
         return result;
     }
 
-    Explosion.prototype.removeEvent = function () {
+    removeEvent() {
+
         this.viewer.scene.preUpdate.removeEventListener(this.preUpdateEvent, this);
     }
 
-    // 移除粒子特效
-    Explosion.prototype.dispose = function () {
+    dispose() {
+
         this.removeEvent(); //清除事件
         this.viewer.scene.primitives.remove(this.particleSystem); //删除粒子对象
         this.viewer.entities.remove(this.entity); //删除entity
@@ -128,7 +139,6 @@ let Explosion = (function () {
         this.hpr = undefined;
         this.trs = undefined;
         this.particleSystem = undefined;
-    }
 
-    return Explosion;
-})()
+    }
+}
