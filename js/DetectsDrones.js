@@ -270,6 +270,7 @@ let DetectsDrones = (function () {
         this.divLabel = new Label({
             map: this.map,
             graphicLayer: this.graphicLayer,
+            type: 1,
             lng: 0,
             lat: 0,
             height: 0,

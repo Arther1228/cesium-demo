@@ -1,28 +1,39 @@
-/**
- * 标签
- */
-let Label = (function () {
+class Label {
 
-    function Label(options) {
-        this.map = undefined;
-        this.graphicLayer = undefined;
-        this.type = 1; // 标签类型
-        this.lng = 60;
-        this.lat = 80;
-        this.height = 44;
-        this.title = ""; // 标题
-        this.content = ""; // 内容
-        this.text = ""; //文本
+    /**
+     * 标签
+     * @param {*} options.map 地图对象 
+     * @param {*} options.graphicLayer 图层 
+     * @param {*} options.type 标签类型
+     * @param {*} options.lng 经度 
+     * @param {*} options.lat 维度 
+     * @param {*} options.height 标签高度 
+     * @param {*} options.text 文本 
+     */
+    constructor(options) {
 
-        let self = this;
-        self = Object.assign(this, options);
+        this.map = options.map;
+        this.graphicLayer = options.graphicLayer,
+        this.type = options.type;
+        this.lng = options.lng;
+        this.lat = options.lat,
+        this.height = options.height,
+        this.text = options.text;
 
         this.graphic = undefined;
 
         this.createLabel();
+
     }
 
-    Label.prototype.createLabel = function () {
+
+    /**
+     * 创建标签
+     */
+    createLabel() {
+
+        let divGraphic;
+
         if (this.type == 1) {
             let html = `<div class="marsTiltPanel marsTiltPanel-theme-red">
                             <div class="marsTiltPanel-wrap">
@@ -54,7 +65,7 @@ let Label = (function () {
                             </div>
                             <div class="arrow" ></div>
                         </div>`;
-            let graphic = new mars3d.graphic.DivGraphic({
+            divGraphic = new mars3d.graphic.DivGraphic({
                 position: [this.lng, this.lat, this.height],
                 style: {
                     html: html,
@@ -66,14 +77,13 @@ let Label = (function () {
                 },
                 pointerEvents: false // false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
             });
-            this.graphicLayer.addGraphic(graphic);
-            this.graphic = graphic;
+
         } else if (this.type == 2) {
             let html = `<div class="marsBluePanel">
                             <div class="marsBluePanel-text">{text}</div>
                         </div>`;
             html = html.replace('{text}', this.text);
-            let graphic = new mars3d.graphic.DivGraphic({
+            divGraphic = new mars3d.graphic.DivGraphic({
                 position: [this.lng, this.lat, this.height],
                 style: {
                     html: html,
@@ -85,16 +95,19 @@ let Label = (function () {
                 },
                 pointerEvents: false // false时不允许拾取和触发任意鼠标事件，但可以穿透div缩放地球
             });
-            this.graphicLayer.addGraphic(graphic);
-            this.graphic = graphic;
         }
+
+        this.graphicLayer.addGraphic(divGraphic);
+        this.graphic = divGraphic;
     }
 
-    Label.prototype.dispose = function () {
+
+    dispose() {
+
         if (this.graphic) {
             this.graphicLayer.removeGraphic(this.graphic);
         }
+
     }
 
-    return Label;
-})();
+}
