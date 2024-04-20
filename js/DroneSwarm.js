@@ -17,7 +17,7 @@ class DroneSwarm {
 
 
     /**
-     * 
+     * 创建模型
      * @param {*} modelType 模型类型
      */
     createModelEntity(modelType) {
@@ -64,6 +64,9 @@ class DroneSwarm {
 
     }
 
+     /**
+     * 清理
+     */
     dispose() {
         if (this.graphic) {
             this.graphicLayer.removeGraphic(this.graphic);

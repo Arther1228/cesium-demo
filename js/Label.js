@@ -100,7 +100,9 @@ class Label {
         return labelGraphic;
     }
 
-
+    /**
+     * 清理
+     */
     dispose() {
 
         if (this.graphic) {

@@ -77,6 +77,9 @@ class Vehicle {
     }
 
 
+    /**
+     * 清理
+     */
     dispose(){
 
         if (this.graphic) {
@@ -85,9 +88,13 @@ class Vehicle {
 
     }
 
+    /**
+     * 响应鼠标事件
+     * @param {*} graphic 
+     */
     menuClick(graphic){
 
         alert(graphic.options.dataId);
-        
+
     }
 }
