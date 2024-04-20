@@ -1,4 +1,4 @@
-class DriveAway{
+class DriveAway {
 
 
     /**
@@ -9,7 +9,7 @@ class DriveAway{
      * @param {*} options.orientationProperty 姿态property
      * @param {*} options.position 驱离后无人机位置
      */
-    constructor(options){
+    constructor(options) {
 
         this.map = options.map;
         this.graphicLayer = options.graphicLayer;
@@ -22,11 +22,11 @@ class DriveAway{
     }
 
 
-      /**
-     * 驱离动画效果
-     * @param {*} pos 
-     */
-      create(pos){
+    /**
+   * 驱离动画效果
+   * @param {*} pos 
+   */
+    create(pos) {
 
         let dateTime = string2Date(pos.time);
         let time = Cesium.JulianDate.fromDate(dateTime)

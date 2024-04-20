@@ -1,5 +1,5 @@
 class ShootDown {
-    
+
     /**
      * 击落
      * @param {*} options.map 地图对象 
@@ -8,7 +8,7 @@ class ShootDown {
      * @param {*} options.orientationProperty 姿态property
      * @param {*} options.position 击落后的位置
      */
-    constructor(options){
+    constructor(options) {
 
         this.map = options.map;
         this.graphicLayer = options.graphicLayer;
@@ -24,7 +24,7 @@ class ShootDown {
      * 击落动画效果
      * @param {*} pos 
      */
-    create(pos){
+    create(pos) {
 
         let dateTime = string2Date(pos.time);
         let time = Cesium.JulianDate.fromDate(dateTime)
