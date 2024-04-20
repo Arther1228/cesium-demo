@@ -38,8 +38,27 @@
 <body>
     <div id="mars3dContainer" class="mars3d-container"></div>
 
+    <div
+        style="position:absolute; left:80px; top:20px; background-color:transparent; width:1200px; height:30px; z-index:99998; border:solid 1px transparent;">
+        <input type="button" onclick="switch2D3D()" value="切换到二维" id="switch2D3D" />
+
+        <input type="button" onclick="switch2D3D()" value="加载时间轴" id="switch2D3D" />
+        <input type="button" onclick="switch2D3D()" value="加载圆柱体" id="switch2D3D" />
+        <input type="button" onclick="switch2D3D()" value="光电扫描" id="switch2D3D" />
+        <input type="button" onclick="switch2D3D()" value="雷达追踪" id="switch2D3D" />
+        <input type="button" onclick="switch2D3D()" value="爆炸效果" id="switch2D3D" />
+
+        <input type="button" onclick="switch2D3D()" value="property飞行" id="switch2D3D" />
+        <input type="button" onclick="switch2D3D()" value="property飞行带扫描显示面" id="switch2D3D" />
+        <input type="button" onclick="switch2D3D()" value="姿态调整" id="switch2D3D" />
+
+        <input type="button" onclick="switch2D3D()" value="数据追加" id="switch2D3D" />
+       
+    </div>
+
     <!--业务代码-->
     <script src="js/index.js"></script>
+    <script src="js/fly.js"></script>
 </body>
 
 </html>
