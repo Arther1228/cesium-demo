@@ -14,7 +14,11 @@ class DroneTrack{
         this.position = options.position;
         this.targetPosition = options.targetPosition;
 
+        this.type = 1;   // 1波纹纹理 2颜色纹理
+        this.angle = 5;
+
         this.coneTrack = this.create();
+
     }
 
 
