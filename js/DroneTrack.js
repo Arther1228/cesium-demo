@@ -1,4 +1,4 @@
-class DroneTrack{
+class DroneTrack {
 
     /**
      * 追踪无人机
@@ -7,7 +7,7 @@ class DroneTrack{
      * @param {*} options.position position属性
      * @param {*} options.targetPosition targetPosition属性
      */
-    constructor(options){
+    constructor(options) {
 
         this.map = options.map;
         this.graphicLayer = options.graphicLayer;
@@ -26,7 +26,7 @@ class DroneTrack{
      * 扫描效果
      * @returns 
      */
-    create(){
+    create() {
 
         let coneTrack;
         if (this.type == 1) {
@@ -69,7 +69,7 @@ class DroneTrack{
     }
 
 
-    dispose(){
+    dispose() {
 
         if (this.coneTrack) {
             this.graphicLayer.removeGraphic(this.coneTrack)
