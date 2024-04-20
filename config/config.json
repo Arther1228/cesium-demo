@@ -65,7 +65,7 @@
       "show": true
     },
     "basemaps": [
-      { "id": 10, "name": "地图底图", "type": "group" },
+      { "id": 10, "name": "地图底图", "type": "group" },      
       {
         "pid": 10,
         "name": "高德离线地图",
@@ -86,7 +86,7 @@
     ],
     "layers": [
       { "id": 50, "name": "辅助图层", "type": "group" },
-      { "pid": 50, "type": "graticule", "name": "经纬网" }
+      { "pid": 50, "type": "graticule", "name": "经纬网" }      
     ]
   }
 }
