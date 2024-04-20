@@ -147,10 +147,10 @@
         // 开始演示任务1
         function startTask1() {
             // window.detectsDrones.showEllipsoidEntity(2);
-            let sceneClock = window.sceneClock = new SceneClock({
+            let sceneClock = new SceneClock({
                 map: map,
             });
-            window.sceneClock.startAnimate();
+            sceneClock.startAnimate();
 
             runTask1(true);
         }
@@ -158,10 +158,10 @@
         // 开始演示任务2
         function startTask2() {
             // window.detectsDrones.showEllipsoidEntity(2);
-            let sceneClock = window.sceneClock = new SceneClock({
+            let sceneClock = new SceneClock({
                 map: map,
             });
-            window.sceneClock.startAnimate();
+            sceneClock.startAnimate();
 
             runTask2();
         }
