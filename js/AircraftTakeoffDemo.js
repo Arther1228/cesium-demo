@@ -1,11 +1,14 @@
-// 模拟飞机起飞，测试用
+class AircraftTakeoffDemo {
 
-let AircraftTakeoffDemo = (function () {
+    /**
+     * 模拟飞机起飞，测试用
+     * @param {*} map 地图对象 
+     */
+    constructor(map) {
 
-    function AircraftTakeoffDemo(map) {
         this.map = map;
-        this.graphicLayer = new mars3d.layer.GraphicLayer()
-        this.map.addLayer(this.graphicLayer)
+        this.graphicLayer = new mars3d.layer.GraphicLayer();
+        this.map.addLayer(this.graphicLayer);
 
         // 在图层绑定Popup弹窗
         this.graphicLayer.bindPopup(function (event) {
@@ -19,9 +22,18 @@ let AircraftTakeoffDemo = (function () {
         let stop = Cesium.JulianDate.addSeconds(start, 100, new Cesium.JulianDate());
         this.start = start;
         this.stop = stop;
+
+        this.load();
+
+        this.startMove();
     }
 
-    AircraftTakeoffDemo.prototype.load = function (lng, lat, height, heading) {
+
+    /**
+     * 加载
+     */
+    load(lng, lat, height, heading) {
+
         let start = this.start;
         let stop = this.stop;
 
@@ -29,7 +41,7 @@ let AircraftTakeoffDemo = (function () {
             position: [lng, lat, height],
             style: {
                 url: 'gltf/feiji.glb',
-                scale: 0.1,
+                scale: 1,
                 minimumPixelSize: 30,
                 heading: heading
             },
@@ -111,6 +123,13 @@ let AircraftTakeoffDemo = (function () {
         graphic.orientation = orientationProperty;
     }
 
-    return AircraftTakeoffDemo;
 
-})();
+    startMove(){
+
+        let sceneClock = new SceneClock({
+            map: this.map,
+        });
+        sceneClock.startAnimate();
+
+    }
+}
