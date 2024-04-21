@@ -151,7 +151,7 @@
             });
             sceneClock.startAnimate();
 
-            runTask1(true);
+            runTask(true, taskOptions);
         }
 
         // 开始演示任务2
@@ -162,7 +162,10 @@
             });
             sceneClock.startAnimate();
 
-            runTask2();
+            taskOptions.disposalType = 1;  // 处置类型 1干扰 2打击
+            taskOptions.modelType = 2;   // 模型类型 1固定翼无人机 四旋翼无人机
+
+            runTask(true, taskOptions);
         }
 
         // Tween动画

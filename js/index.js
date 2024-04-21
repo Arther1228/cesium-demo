@@ -41,7 +41,7 @@ function initMap(options) {
     // 以下为演示代码
 
     // 只演示雷达扫描
-    runTask1(false);
+    runTask(false, taskOptions);
 
     // let aircraftTakeoffDemo = new AircraftTakeoffDemo(map);
     // aircraftTakeoffDemo.load(117.1812, 31.8185, 44, 25);
