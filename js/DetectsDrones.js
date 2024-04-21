@@ -1,112 +1,47 @@
-/**
- * 车载雷达探测无人机
- */
-let DetectsDrones = (function () {
+class DetectsDrones {
 
-    function DetectsDrones(options) {
+    /**
+     * 车载雷达探测无人机
+     * @param {*} options.disposalType 处置类型 1干扰 2打击
+     * @param {*} options.modelType 模型类型 
+     * @param {*} options.vehicle1Position 汽车1坐标 
+     * @param {*} options.vehicle2Position 汽车2坐标
+     * @param {*} options.vehicle3Position 汽车3坐标
+     * @param {*} options.radarRadius 雷达搜索半径(单位:米)
+     * @param {*} options.radarCenter 雷达中心点坐标 
+     * @param {*} options.DronePositions 无人机飞行路线时间点及坐标集合
+     * @param {*} options.interfereStart 干扰驱离 开始时间 
+     * @param {*} options.interfereEnd 干扰驱离 结束时间  
+     * @param {*} options.shootdownStart 击落开始 开始时间
+     * @param {*} options.shootdownEnd 击落开始 结束时间 
+     * @param {*} options.quli 驱离对象{时间、坐标}
+     * @param {*} options.jiluo 击落对象{时间、坐标}
+     * @param {*} options.explosionData 爆炸对象{开始时间、结束时间、坐标}
+     * @param {*} options.attackView 攻方视角
+     * @param {*} options.defendView 守方视角
+     */
+    constructor(options) {
+
         this.map = map;
 
-        let defaultOptions = {
-            disposalType: 2, // 处置类型 1干扰 2打击
-            disposalResult: 1, // 处置结果 1成功 2失败
-
-            // 无人机参数
-            modelType: 1, // 模型
-
-            //汽车参数
-            vehicle1Position: { // 汽车1坐标
-                lng: 117.1808,
-                lat: 31.8187,
-                height: 44,
-                heading: 25
-            },
-            vehicle2Position: { // 汽车2坐标
-                lng: 117.1878,
-                lat: 31.8189,
-                height: 44,
-                heading: -60
-            },
-            vehicle3Position: { // 汽车3坐标
-                lng: 117.1829,
-                lat: 31.8278,
-                height: 44,
-                heading: -90
-            },
-
-            radarRadius: 1500, // 雷达搜索半径(单位:米)
-            radarCenter: { // 雷达中心点坐标
-                lng: 117.1808,
-                lat: 31.8187,
-                height: 44
-            },
-
-            // 无人机飞行路线时间点及坐标集合
-            DronePositions: [
-                { // 时间点1
-                    time: '2024-01-22 12:00:00',
-                    lng: 117.2442,
-                    lat: 31.8537,
-                    height: 1200,
-                },
-                { // 时间点2
-                    time: '2024-01-22 12:00:10',
-                    lng: 117.1950,
-                    lat: 31.8187,
-                    height: 1200,
-                },
-                { // 时间点3
-                    time: '2024-01-22 12:00:20',
-                    lng: 117.183,
-                    lat: 31.8177,
-                    height: 1200,
-                }
-            ],
-
-            // 干扰驱离或击落
-            interfereStart: '2024-01-22 12:00:15', // 干扰开始
-            interfereEnd: '2024-01-22 12:00:20', // 干扰结束
-            shootdownStart: '2024-01-22 12:00:17', // 击落开始
-            shootdownEnd: '2024-01-22 12:00:20', // 击落结束
-            quli: { // 时间点3 驱离后位置
-                time: '2024-01-22 12:00:30',
-                lng: 117.1450,
-                lat: 31.8687,
-                height: 1200,
-            },
-            jiluo: { // 时间点3 击落后位置
-                time: '2024-01-22 12:00:21',
-                lng: 117.1780,
-                lat: 31.8200,
-                height: 44,
-            },
-
-            // 爆炸
-            explosionData: {
-                startTime: '2024-01-22 12:00:13.000',
-                endTime: '2024-01-22 12:00:15.000',
-                lng: 117.1829,
-                lat: 31.8278,
-                height: 44,
-            },
-
-            attackView: { // 攻方视角
-                lat: 31.795365,
-                lng: 117.216844,
-                alt: 4337.6,
-                heading: 328.5,
-                pitch: -45.4
-            },
-            defendView: { // 守方视角
-                lat: 31.784195,
-                lng: 117.171364,
-                alt: 423,
-                heading: 17.4,
-                pitch: 3.5
-            }
-        };
-
-        options = Object.assign(defaultOptions, options);
-        Object.assign(this, options);
+        this.disposalType = options.disposalType; 
+        this.modelType = options.modelType; 
+        this.vehicle1Position = options.vehicle1Position; 
+        this.vehicle2Position = options.vehicle2Position; 
+        this.vehicle3Position = options.vehicle3Position; 
+        this.vehicle3Position = options.vehicle3Position; 
+        this.radarRadius = options.radarRadius; 
+        this.radarCenter = options.radarCenter; 
+        this.DronePositions = options.DronePositions; 
+        this.interfereStart = options.interfereStart; 
+        this.interfereEnd = options.interfereEnd; 
+        this.shootdownStart = options.shootdownStart; 
+        this.shootdownEnd = options.shootdownEnd; 
+        this.quli = options.quli; 
+        this.jiluo = options.jiluo; 
+        this.explosionData = options.explosionData; 
+        this.attackView = options.attackView; 
+        this.defendView = options.defendView; 
 
         this.sameple(); // 重新采样this.DronePositions
 
@@ -117,101 +52,18 @@ let DetectsDrones = (function () {
         this.graphicLayer = new mars3d.layer.GraphicLayer()
         this.map.addLayer(this.graphicLayer)
 
-        // 实体定义
-        this.ellipsoidEntity1 = undefined; // 带雷达扫描的半球
-        this.ellipsoidEntity2 = undefined; // 不带雷达扫描的半球
-        this.ellipsoidLabel = undefined; // 雷达半球Label
-        this.vehicle1 = undefined; // 汽车1
-        this.vehicle2 = undefined; // 汽车2
-        this.vehicle3 = undefined; // 汽车3
-        this.droneSwarm = undefined; // 无人要群
-        this.divLabel = undefined; // div信息
-        this.interferenceDrones = undefined; // 干扰
-        this.attackDrones = undefined; // 激光
-        this.explosion = undefined; // 爆炸效果
 
         this.moving = false; // 正在演示
+
     }
+
+
 
     /**
-     * 添加半球
-     * @param ellipsoidType 1:带雷达扫描的半球 2:不带雷达扫描的半球
+     * 加载图形和模型
      */
-    DetectsDrones.prototype.addEllipsoidEntity = function (ellipsoidType) {
-        this.removeEllipsoidEntity();
+    load() {
 
-        if (ellipsoidType == 1) {
-            this.graphicLayer.addGraphic(this.ellipsoidEntity1);
-        } else if (ellipsoidType == 2) {
-            this.graphicLayer.addGraphic(this.ellipsoidEntity2);
-        }
-    }
-
-    /**
-     * 移除半球
-     */
-    DetectsDrones.prototype.removeEllipsoidEntity = function () {
-        if (this.ellipsoidEntity1) {
-            this.graphicLayer.removeGraphic(this.ellipsoidEntity1);
-        }
-        if (this.ellipsoidEntity2) {
-            this.graphicLayer.removeGraphic(this.ellipsoidEntity2);
-        }
-    }
-
-    /**
-     * 创建雷达扫描半球
-     */
-    DetectsDrones.prototype.createEllipsoidEntity = function () {
-        // 带雷达扫描的半球
-        const ellipsoidEntity1 = new mars3d.graphic.EllipsoidEntity({
-            position: new mars3d.LngLatPoint(this.radarCenter.lng, this.radarCenter.lat, this.radarCenter.height),
-            style: {
-                radii: new Cesium.Cartesian3(this.radarRadius, this.radarRadius, this.radarRadius),
-                maximumConeDegree: 90,
-                color: Cesium.Color.BLUE.withAlpha(0.0),
-                outline: true,
-                outlineColor: "rgba(0,255,0,0.5)",
-                stackPartitions: 16,
-                slicePartitions: 16,
-            },
-            scanPlane: {
-                step: 5.0, // 步长
-                min: -180.0, // 最小值
-                max: 180.0, // 最大值
-                style: {
-                    innerRadii: 500,
-                    outline: true,
-                    color: "rgba(0, 204, 10, 0.2)",
-                    outlineColor: "rgba(0, 204, 10, 0.1)",
-                    minimumClockDegree: 90.0,
-                    maximumClockDegree: 120.0,
-                    minimumConeDegree: 20.0,
-                    maximumConeDegree: 70.0
-                }
-            }
-        });
-        this.graphicLayer.addGraphic(ellipsoidEntity1);
-        this.ellipsoidEntity1 = ellipsoidEntity1;
-
-        // 不带雷达扫描的半球
-        const ellipsoidEntity2 = new mars3d.graphic.EllipsoidEntity({
-            position: new mars3d.LngLatPoint(this.radarCenter.lng, this.radarCenter.lat, this.radarCenter.height),
-            style: {
-                radii: new Cesium.Cartesian3(this.radarRadius, this.radarRadius, this.radarRadius),
-                maximumConeDegree: 90,
-                color: Cesium.Color.BLUE.withAlpha(0.0),
-                outline: true,
-                outlineColor: "rgba(0,255,0,0.5)",
-                stackPartitions: 16,
-                slicePartitions: 16,
-            },
-        });
-        this.graphicLayer.addGraphic(ellipsoidEntity2);
-        this.ellipsoidEntity2 = ellipsoidEntity2;
-    }
-
-    DetectsDrones.prototype.load = function () {
         this.createEllipsoidEntity();
         this.addEllipsoidEntity(1);
 
@@ -274,6 +126,7 @@ let DetectsDrones = (function () {
             lng: 0,
             lat: 0,
             height: 0,
+            text: ''
         });
 
         if (this.disposalType == 1) { // 干扰
@@ -291,9 +144,100 @@ let DetectsDrones = (function () {
                 vehiclePosition: this.vehicle2Position,
             });
         }
+
     }
 
-    DetectsDrones.prototype.startMove = function () {
+    /**
+     * 创建雷达扫描半球
+     */
+    createEllipsoidEntity() {
+
+        // 带雷达扫描的半球
+        const ellipsoidEntity1 = new mars3d.graphic.EllipsoidEntity({
+            position: new mars3d.LngLatPoint(this.radarCenter.lng, this.radarCenter.lat, this.radarCenter.height),
+            style: {
+                radii: new Cesium.Cartesian3(this.radarRadius, this.radarRadius, this.radarRadius),
+                maximumConeDegree: 90,
+                color: Cesium.Color.BLUE.withAlpha(0.0),
+                outline: true,
+                outlineColor: "rgba(0,255,0,0.5)",
+                stackPartitions: 16,
+                slicePartitions: 16,
+            },
+            scanPlane: {
+                step: 5.0, // 步长
+                min: -180.0, // 最小值
+                max: 180.0, // 最大值
+                style: {
+                    innerRadii: 500,
+                    outline: true,
+                    color: "rgba(0, 204, 10, 0.2)",
+                    outlineColor: "rgba(0, 204, 10, 0.1)",
+                    minimumClockDegree: 90.0,
+                    maximumClockDegree: 120.0,
+                    minimumConeDegree: 20.0,
+                    maximumConeDegree: 70.0
+                }
+            }
+        });
+        this.graphicLayer.addGraphic(ellipsoidEntity1);
+        this.ellipsoidEntity1 = ellipsoidEntity1;
+
+        // 不带雷达扫描的半球
+        const ellipsoidEntity2 = new mars3d.graphic.EllipsoidEntity({
+            position: new mars3d.LngLatPoint(this.radarCenter.lng, this.radarCenter.lat, this.radarCenter.height),
+            style: {
+                radii: new Cesium.Cartesian3(this.radarRadius, this.radarRadius, this.radarRadius),
+                maximumConeDegree: 90,
+                color: Cesium.Color.BLUE.withAlpha(0.0),
+                outline: true,
+                outlineColor: "rgba(0,255,0,0.5)",
+                stackPartitions: 16,
+                slicePartitions: 16,
+            },
+        });
+        this.graphicLayer.addGraphic(ellipsoidEntity2);
+        this.ellipsoidEntity2 = ellipsoidEntity2;
+
+    }
+
+    /**
+     * 添加半球
+     * @param {*} ellipsoidType 1:带雷达扫描的半球 2:不带雷达扫描的半球
+     */
+    addEllipsoidEntity(ellipsoidType) {
+
+        this.removeEllipsoidEntity();
+
+        if (ellipsoidType == 1) {
+            this.graphicLayer.addGraphic(this.ellipsoidEntity1);
+        } else if (ellipsoidType == 2) {
+            this.graphicLayer.addGraphic(this.ellipsoidEntity2);
+        }
+
+    }
+
+
+    /**
+     * 移除半球
+     */
+    removeEllipsoidEntity() {
+
+        if (this.ellipsoidEntity1) {
+            this.graphicLayer.removeGraphic(this.ellipsoidEntity1);
+        }
+        if (this.ellipsoidEntity2) {
+            this.graphicLayer.removeGraphic(this.ellipsoidEntity2);
+        }
+
+    }
+
+
+    /**
+     * 无人机开始飞行
+     */
+    startMove() {
+
         this.moving = true;
         let droneGraphic = this.droneSwarm.graphic;
 
@@ -404,21 +348,27 @@ let DetectsDrones = (function () {
         // 无人机位置
         droneGraphic.position = targetProperty;
         droneGraphic.orientation = orientationProperty;
+
     }
+
 
     /**
      * 重新采样this.DronePositions
      */
-    DetectsDrones.prototype.sameple = function () {
+    sameple() {
+
         for (let i = 0; i < 3; i++) {
             this.samepleOnce();
         }
+
     }
+
 
     /**
      * 重新采样this.DronePositions
      */
-    DetectsDrones.prototype.samepleOnce = function () {
+    samepleOnce() {
+
         for (let i = 0; i < this.DronePositions.length - 1; i += 2) {
             let pos1 = this.DronePositions[i];
             let pos2 = this.DronePositions[i + 1];
@@ -438,10 +388,13 @@ let DetectsDrones = (function () {
         }
     }
 
+
+
     /**
      * 计算无人机的heading
      */
-    DetectsDrones.prototype.calcHeading = function () {
+    calcHeading() {
+
         // 清空原有heading
         this.DronePositions.map(pos => {
             pos.heading = undefined;
@@ -467,17 +420,20 @@ let DetectsDrones = (function () {
         }
 
         if (lastPos.lng != this.jiluo.lng && lastPos.lat != this.jiluo.lat) {
-            heading = -90 + getHeading(Cesium.Cartesian3.fromDegrees(lastPos.lng, lastPos.lat), Cesium.Cartesian3.fromDegrees(this.jiluo.lng, this.jiluo.lat));
+            let heading = -90 + getHeading(Cesium.Cartesian3.fromDegrees(lastPos.lng, lastPos.lat), Cesium.Cartesian3.fromDegrees(this.jiluo.lng, this.jiluo.lat));
             this.jiluo.heading = heading;
         } else {
             this.jiluo.heading = 0;
         }
+
     }
+
 
     /**
      * 计算无人机的pitch
      */
-    DetectsDrones.prototype.calcPitch = function () {
+    calcPitch() {
+
         // 清空原有pitch
         this.DronePositions.map(pos => {
             pos.pitch = undefined;
@@ -494,10 +450,12 @@ let DetectsDrones = (function () {
         }
     }
 
+
     /**
      * 计算无人机的roll(不支持转弯大于90度)
      */
-    DetectsDrones.prototype.calcRoll = function () {
+    calcRoll() {
+
         // 清空原有roll
         this.DronePositions.map(pos => {
             pos.roll = undefined;
@@ -509,9 +467,15 @@ let DetectsDrones = (function () {
             let deltaHeading = pos2.heading - pos1.heading;
             pos2.roll = deltaHeading / 1.5;
         }
+
     }
 
-    DetectsDrones.prototype.dispose = function () {
+
+    /**
+     * 清理
+     */
+    dispose() {
+
         this.moving = false;
 
         // 移除实体
@@ -529,9 +493,15 @@ let DetectsDrones = (function () {
 
         // 移除图层
         this.graphicLayer && this.map.removeLayer(this.graphicLayer);
+
     }
 
-    DetectsDrones.prototype.moveVehicle3 = function () {
+
+    /**
+     * TWEEN动画
+     */
+    moveVehicle3() {
+
         this.tween && TWEEN.remove(this.tween);
         this.tween = new TWEEN.Tween({
             x: this.vehicle3Position.lng,
@@ -549,8 +519,8 @@ let DetectsDrones = (function () {
         }).onComplete(() => {
             TWEEN.remove(this.tween);
         });
+
     }
 
-    return DetectsDrones;
 
-})();
+}

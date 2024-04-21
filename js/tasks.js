@@ -203,12 +203,20 @@ function runTask2() {
 }
 
 function runTask(startMove, options) {
-    taskArray.map(detectsDronesTask => {
-        detectsDronesTask.dispose();
-    });
-    Object.assign(options, { map: map });
-    let detectsDrones = window.detectsDrones = new DetectsDrones(options);
-    detectsDrones.load();
-    startMove && detectsDrones.startMove();
-    taskArray.push(detectsDrones);
+
+    try {
+
+        taskArray.map(detectsDronesTask => {
+            detectsDronesTask.dispose();
+        });
+        Object.assign(options, { map: map });
+        let detectsDrones = window.detectsDrones = new DetectsDrones(options);
+        detectsDrones.load();
+        startMove && detectsDrones.startMove();
+        taskArray.push(detectsDrones);
+        
+    } catch (error) {
+        console.error(error)
+    }
+
 }
