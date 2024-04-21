@@ -1,7 +1,7 @@
 class InterferenceDrones {
 
     /**
-     * 电磁干扰
+     * 电磁干扰无人机
      * @param {*} options.map 地图对象 
      * @param {*} options.graphicLayer 图层
      * @param {*} options.length 攻击距离 
@@ -73,7 +73,7 @@ class InterferenceDrones {
 
 
     /**
-     * 转化为点
+     * 转化为坐标
      */
     toPositions() {
 
