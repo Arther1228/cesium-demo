@@ -4,11 +4,6 @@ let taskArray = [];
 
 let taskOptions = {
 
-    disposalType: 2, // 处置类型 1干扰 2打击
-
-    // 无人机参数
-    modelType: 1, // 模型
-
     //汽车参数
     vehicle1Position: { // 汽车1坐标
         lng: 117.1808,
