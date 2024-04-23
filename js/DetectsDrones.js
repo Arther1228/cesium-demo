@@ -24,24 +24,24 @@ class DetectsDrones {
 
         this.map = map;
 
-        this.disposalType = options.disposalType; 
-        this.modelType = options.modelType; 
-        this.vehicle1Position = options.vehicle1Position; 
-        this.vehicle2Position = options.vehicle2Position; 
-        this.vehicle3Position = options.vehicle3Position; 
-        this.vehicle3Position = options.vehicle3Position; 
-        this.radarRadius = options.radarRadius; 
-        this.radarCenter = options.radarCenter; 
-        this.DronePositions = options.DronePositions; 
-        this.interfereStart = options.interfereStart; 
-        this.interfereEnd = options.interfereEnd; 
-        this.shootdownStart = options.shootdownStart; 
-        this.shootdownEnd = options.shootdownEnd; 
-        this.quli = options.quli; 
-        this.jiluo = options.jiluo; 
-        this.explosionData = options.explosionData; 
-        this.attackView = options.attackView; 
-        this.defendView = options.defendView; 
+        this.disposalType = options.disposalType;
+        this.modelType = options.modelType;
+        this.vehicle1Position = options.vehicle1Position;
+        this.vehicle2Position = options.vehicle2Position;
+        this.vehicle3Position = options.vehicle3Position;
+        this.vehicle3Position = options.vehicle3Position;
+        this.radarRadius = options.radarRadius;
+        this.radarCenter = options.radarCenter;
+        this.DronePositions = options.DronePositions;
+        this.interfereStart = options.interfereStart;
+        this.interfereEnd = options.interfereEnd;
+        this.shootdownStart = options.shootdownStart;
+        this.shootdownEnd = options.shootdownEnd;
+        this.quli = options.quli;
+        this.jiluo = options.jiluo;
+        this.explosionData = options.explosionData;
+        this.attackView = options.attackView;
+        this.defendView = options.defendView;
 
         this.sameple(); // 重新采样this.DronePositions
 
@@ -313,27 +313,29 @@ class DetectsDrones {
                 }
             }
 
-            // 演示汽车旁边爆炸效果
-            if (!this.explosionData) return; // 没有数据时不显示爆炸效果
-            let explosionStartTime = dayjs(string2Date(this.explosionData.startTime));
-            let explosionEndTime = dayjs(string2Date(this.explosionData.endTime));
-            if (datetime.valueOf() >= explosionStartTime.valueOf() && datetime.valueOf() <= explosionEndTime.valueOf()) {
-                if (!this.explosion) {
-                    this.explosion = new Explosion({
-                        map: this.map,
-                        graphicLayer: this.graphicLayer,
-                        startTime: this.explosionData.startTime,
-                        endTime: this.explosionData.endTime,
-                        lng: this.explosionData.lng,
-                        lat: this.explosionData.lat,
-                        height: this.explosionData.height,
-                    });
+            // 演示爆炸效果
+            if (this.modelType === 1) {
+                if (!this.explosionData) return; // 没有数据时不显示爆炸效果
+                let explosionStartTime = dayjs(string2Date(this.explosionData.startTime));
+                let explosionEndTime = dayjs(string2Date(this.explosionData.endTime));
+                if (datetime.valueOf() >= explosionStartTime.valueOf() && datetime.valueOf() <= explosionEndTime.valueOf()) {
+                    if (!this.explosion) {
+                        this.explosion = new Explosion({
+                            map: this.map,
+                            graphicLayer: this.graphicLayer,
+                            startTime: this.explosionData.startTime,
+                            endTime: this.explosionData.endTime,
+                            lng: this.explosionData.lng,
+                            lat: this.explosionData.lat,
+                            height: this.explosionData.height,
+                        });
+                    }
                 }
-            }
-            if (datetime.valueOf() > explosionEndTime.valueOf()) {
-                if (this.explosion) {
-                    this.explosion.dispose();
-                    this.explosion = undefined;
+                if (datetime.valueOf() > explosionEndTime.valueOf()) {
+                    if (this.explosion) {
+                        this.explosion.dispose();
+                        this.explosion = undefined;
+                    }
                 }
             }
 
