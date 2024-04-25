@@ -23,6 +23,7 @@ class DetectsDrones {
     constructor(options) {
 
         this.map = map;
+        this.graphicLayer = options.graphicLayer;
 
         this.disposalType = options.disposalType;
         this.modelType = options.modelType;
@@ -48,10 +49,6 @@ class DetectsDrones {
         this.calcHeading(); // 计算无人机的heading
         this.calcPitch(); // 计算无人机的pitch
         this.calcRoll(); // 计算无人机的roll
-
-        this.graphicLayer = new mars3d.layer.GraphicLayer()
-        this.map.addLayer(this.graphicLayer)
-
 
         this.moving = false; // 正在演示
 
@@ -494,7 +491,7 @@ class DetectsDrones {
         this.explosion && this.explosion.dispose(); //爆炸
 
         // 移除图层
-        this.graphicLayer && this.map.removeLayer(this.graphicLayer);
+        // this.graphicLayer && this.map.removeLayer(this.graphicLayer);
 
     }
 

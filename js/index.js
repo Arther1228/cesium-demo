@@ -17,16 +17,18 @@ mars3d.Util.fetchJson({ url: configUrl })
     });
 
 let map;
+let demoGraphicLayer;
+let sceneClock;
 
 function initMap(options) {
 
     //合并属性参数，可覆盖config.json中的对应配置
-    var mapOptions = mars3d.Util.merge(options, { 
-      control: {
-          clockAnimate: true, // 时钟动画控制(左下角)
-          timeline: true, //是否显示 时间线控件
-          compass: { top: "10px", left: "5px" }
-      },
+    var mapOptions = mars3d.Util.merge(options, {
+        control: {
+            clockAnimate: true, // 时钟动画控制(左下角)
+            timeline: true, //是否显示 时间线控件
+            compass: { top: "10px", left: "5px" }
+        },
     })
 
     // 创建三维地球场景
@@ -39,6 +41,16 @@ function initMap(options) {
     map.viewer.scene.screenSpaceCameraController.minimumZoomDistance = 50;
 
     // 以下为演示代码
+
+    // 测试用图层
+    demoGraphicLayer = new mars3d.layer.GraphicLayer();
+    map.addLayer(demoGraphicLayer);
+    Object.assign(taskOptions, { graphicLayer: demoGraphicLayer });
+
+    // 时钟
+    sceneClock = new SceneClock({
+        map: map,
+    });
 
     // 只演示雷达扫描
     // runTask(false, taskOptions);

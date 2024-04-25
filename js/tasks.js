@@ -3,7 +3,7 @@
 let taskArray = [];
 
 let taskOptions = {
-
+    
     //汽车参数
     vehicle1Position: { // 汽车1坐标
         lng: 117.1808,
@@ -113,13 +113,7 @@ function runTask(startMove, options) {
         startMove && detectsDrones.startMove();
         taskArray.push(detectsDrones);
 
-
-        //时钟
-        let sceneClock = new SceneClock({
-            map: map,
-        });
         sceneClock.startAnimate();
-
 
     } catch (error) {
         console.error(error);

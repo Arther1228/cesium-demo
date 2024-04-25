@@ -159,7 +159,11 @@ class AttackDrones {
     dispose() {
 
         if (this.entity) {
-            this.graphicLayer.removeGraphic(this.entity)
+            this.graphicLayer.removeGraphic(this.entity);
+        }
+
+        if(this.label) {
+            this.label.dispose();
         }
     }
 

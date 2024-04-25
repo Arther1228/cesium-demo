@@ -4,11 +4,10 @@ class AircraftTakeoffDemo {
      * 模拟飞机起飞，测试用
      * @param {*} map 地图对象 
      */
-    constructor(map) {
+    constructor(map, demoGraphicLayer) {
 
         this.map = map;
-        this.graphicLayer = new mars3d.layer.GraphicLayer();
-        this.map.addLayer(this.graphicLayer);
+        this.graphicLayer = demoGraphicLayer;
 
         // 在图层绑定Popup弹窗
         this.graphicLayer.bindPopup(function (event) {
@@ -131,9 +130,6 @@ class AircraftTakeoffDemo {
      */
     startMove() {
 
-        let sceneClock = new SceneClock({
-            map: this.map,
-        });
         sceneClock.startAnimate();
 
     }

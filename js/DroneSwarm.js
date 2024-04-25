@@ -10,6 +10,13 @@ class DroneSwarm {
         this.graphicLayer = options.graphicLayer;
         this.modelType = options.modelType == undefined ? 1 : options.modelType;
 
+        // 之前的演示任务因为抽样会设置坐标,所以并没有用到这里的参数
+        this.lng = options.lng;
+        this.lat = options.lat;
+        this.height = options.height;
+
+        this.graphic = undefined;
+
         this.createModelEntity(this.modelType);
 
     }
@@ -58,13 +65,8 @@ class DroneSwarm {
                 path: path
             });
         }
-
-        try {
-            this.graphicLayer.addGraphic(modelEntity);
-        } catch (error) {
-            console.error(error)
-        }
-
+        this.graphicLayer.addGraphic(modelEntity);
+        
         this.graphic = modelEntity;
     }
 

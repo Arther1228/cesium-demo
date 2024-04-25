@@ -60,8 +60,14 @@
         <input type="button" onclick="startTask2()" value="开始演示任务2" />
         <input type="button" onclick="appendData()" value="追加数据" />
         <input type="button" onclick="runTween()" value="Tween动画" />
+    </div>
+
+    <div
+        style="position:absolute; left:80px; top:50px; background-color:transparent; width:1200px; height:30px; z-index:99998; border:solid 1px transparent;">
         <input type="button" onclick="runFly()" value="模拟起飞" />
         <input type="button" onclick="loadModel()" value="加载模型" />
+        <input type="button" onclick="goInspectionTask()" value="巡检任务" />
+
     </div>
 
     <!--业务代码-->
@@ -80,6 +86,13 @@
     <script src="js/tasks.js"></script>
     <script src="js/AircraftTakeoffDemo.js"></script>
     <script src="js/index.js"></script>
+    
+
+    <!--测试用代码-->
+    <script src="sample/InspectionTask.js"></script>
+    <script src="sample/data.js"></script>
+    <script src="sample/function.js"></script>
+
 
     <script type="text/javascript">
         // 二三维切换
@@ -191,35 +204,6 @@
                     pitch: 60
                 });
             }
-        }
-
-        // 起飞
-        function runFly() {
-
-            taskArray.map(detectsDronesTask => {
-            detectsDronesTask.dispose();
-            });
-
-            let takeOff = new AircraftTakeoffDemo(map);
-            takeOff.load(117.2442, 31.8537, 1200, 25);
-
-            taskArray.push(takeOff);
-
-        }
-
-
-        // 加载模型
-        function loadModel() {
-
-            let graphicLayer = new mars3d.layer.GraphicLayer();
-            let options = {
-                map: map,
-                graphicLayer: graphicLayer,
-                modelType: 1
-            }
-
-            let droneSwarm = new DroneSwarm(options);
-
         }
 
     </script>
