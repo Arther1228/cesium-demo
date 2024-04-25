@@ -10,8 +10,7 @@ class DroneSwarm {
         this.graphicLayer = options.graphicLayer;
         this.modelType = options.modelType == undefined ? 1 : options.modelType;
 
-        this.graphic = this.createModelEntity(this.modelType);
-        this.graphicLayer.addGraphic(this.graphic);
+        this.createModelEntity(this.modelType);
 
     }
 
@@ -60,13 +59,18 @@ class DroneSwarm {
             });
         }
 
-        return modelEntity;
+        try {
+            this.graphicLayer.addGraphic(modelEntity);
+        } catch (error) {
+            console.error(error)
+        }
 
+        this.graphic = modelEntity;
     }
 
-     /**
-     * 清理
-     */
+    /**
+    * 清理
+    */
     dispose() {
         if (this.graphic) {
             this.graphicLayer.removeGraphic(this.graphic);

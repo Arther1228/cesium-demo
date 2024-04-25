@@ -113,6 +113,14 @@ function runTask(startMove, options) {
         startMove && detectsDrones.startMove();
         taskArray.push(detectsDrones);
 
+
+        //时钟
+        let sceneClock = new SceneClock({
+            map: map,
+        });
+        sceneClock.startAnimate();
+
+
     } catch (error) {
         console.error(error);
     }

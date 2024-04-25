@@ -18,14 +18,11 @@ class AircraftTakeoffDemo {
             return mars3d.Util.getTemplateHtml({ title: "信息提示", template: "all", attr })
         })
 
-        let start = Cesium.JulianDate.fromDate(new Date(2024, 1, 22, 12));
+        let start = Cesium.JulianDate.fromDate(new Date(2024, 0, 22, 12));
         let stop = Cesium.JulianDate.addSeconds(start, 100, new Cesium.JulianDate());
         this.start = start;
         this.stop = stop;
 
-        this.load();
-
-        this.startMove();
     }
 
 
@@ -37,15 +34,15 @@ class AircraftTakeoffDemo {
         let start = this.start;
         let stop = this.stop;
 
-        const graphic = new mars3d.graphic.ModelEntity({
+        const modelGraphic = new mars3d.graphic.ModelEntity({
             position: [lng, lat, height],
             style: {
-                url: 'gltf/feiji.glb',
-                scale: 1,
+                url: 'gltf/wrj.glb',
+                scale: 0.5,
                 minimumPixelSize: 30,
-                heading: heading
+                heading: 140
             },
-            attr: { remark: "汽车" },
+            attr: { remark: "无人机" },
             //实时轨迹显示
             path: {
                 show: true,
@@ -58,8 +55,9 @@ class AircraftTakeoffDemo {
                     color: new Cesium.Color(255, 255, 255, 180) //颜色
                 })
             }
-        })
-        this.graphicLayer.addGraphic(graphic)
+        });
+
+        this.graphicLayer.addGraphic(modelGraphic);
 
         let timePosArr = [];
         timePosArr.push({
@@ -119,17 +117,36 @@ class AircraftTakeoffDemo {
             orientationProperty.addSample(timePos.time, timePos.headingPitchRollQuaternion);
         }
 
-        graphic.position = property;
-        graphic.orientation = orientationProperty;
+        this.graphic = modelGraphic;
+
+        this.graphic.position = property;
+        this.graphic.orientation = orientationProperty;
+
+        this.startMove();
     }
 
 
-    startMove(){
+    /**
+     * 飞行
+     */
+    startMove() {
 
         let sceneClock = new SceneClock({
             map: this.map,
         });
         sceneClock.startAnimate();
+
+    }
+
+
+    /**
+     * 清理
+     */
+    dispose() {
+
+        if (this.graphic) {
+            this.graphicLayer.removeGraphic(this.graphic)
+        }
 
     }
 }

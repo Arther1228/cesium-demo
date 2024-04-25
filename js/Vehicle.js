@@ -21,7 +21,7 @@ class Vehicle {
         this.dataId = options.dataId;
         
         this.modelType = 1; // 模型类型
-        this.graphic = this.loadModel();
+        this.loadModel();
 
     }
 
@@ -73,7 +73,7 @@ class Vehicle {
 
         this.graphicLayer.addGraphic(vehicleGraphic)
 
-        return vehicleGraphic;
+        this.graphic = vehicleGraphic;
     }
 
 

@@ -3,7 +3,8 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0" />
     <meta name="author" content="火星科技 http://mars3d.cn " />
     <meta name="apple-touch-fullscreen" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -59,6 +60,8 @@
         <input type="button" onclick="startTask2()" value="开始演示任务2" />
         <input type="button" onclick="appendData()" value="追加数据" />
         <input type="button" onclick="runTween()" value="Tween动画" />
+        <input type="button" onclick="runFly()" value="模拟起飞" />
+        <input type="button" onclick="loadModel()" value="加载模型" />
     </div>
 
     <!--业务代码-->
@@ -145,11 +148,6 @@
 
         // 开始演示任务1
         function startTask1() {
-            // window.detectsDrones.showEllipsoidEntity(2);
-            let sceneClock = new SceneClock({
-                map: map,
-            });
-            sceneClock.startAnimate();
 
             taskOptions.disposalType = 2;  // 处置类型 1干扰 2打击
             taskOptions.modelType = 1;   // 模型类型 1固定翼无人机 四旋翼无人机
@@ -159,11 +157,6 @@
 
         // 开始演示任务2
         function startTask2() {
-            // window.detectsDrones.showEllipsoidEntity(2);
-            let sceneClock = new SceneClock({
-                map: map,
-            });
-            sceneClock.startAnimate();
 
             taskOptions.disposalType = 1;  // 处置类型 1干扰 2打击
             taskOptions.modelType = 2;   // 模型类型 1固定翼无人机 四旋翼无人机
@@ -199,6 +192,36 @@
                 });
             }
         }
+
+        // 起飞
+        function runFly() {
+
+            taskArray.map(detectsDronesTask => {
+            detectsDronesTask.dispose();
+            });
+
+            let takeOff = new AircraftTakeoffDemo(map);
+            takeOff.load(117.2442, 31.8537, 1200, 25);
+
+            taskArray.push(takeOff);
+
+        }
+
+
+        // 加载模型
+        function loadModel() {
+
+            let graphicLayer = new mars3d.layer.GraphicLayer();
+            let options = {
+                map: map,
+                graphicLayer: graphicLayer,
+                modelType: 1
+            }
+
+            let droneSwarm = new DroneSwarm(options);
+
+        }
+
     </script>
 </body>
 

@@ -20,7 +20,7 @@ class Label {
         this.height = options.height,
         this.text = options.text;
 
-        this.graphic = this.createLabel();
+        this.createLabel();
 
     }
 
@@ -97,7 +97,7 @@ class Label {
 
         this.graphicLayer.addGraphic(labelGraphic);
 
-        return labelGraphic;
+        this.graphic =  labelGraphic;
     }
 
     /**
