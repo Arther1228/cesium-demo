@@ -104,9 +104,9 @@ let taskOptions = {
 function runTask(startMove, options) {
 
     try {
-        taskArray.map(detectsDronesTask => {
-            detectsDronesTask.dispose();
-        });
+        
+        clearTask();
+        
         Object.assign(options, { map: map });
         let detectsDrones = window.detectsDrones = new DetectsDrones(options);
         detectsDrones.load();
@@ -118,5 +118,16 @@ function runTask(startMove, options) {
     } catch (error) {
         console.error(error);
     }
+
+}
+
+/**
+ * 清理历史任务
+ */
+function clearTask(){
+
+    taskArray.map(detectsDronesTask => {
+        detectsDronesTask.dispose();
+    });
 
 }

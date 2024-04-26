@@ -86,12 +86,12 @@
     <script src="js/tasks.js"></script>
     <script src="js/AircraftTakeoffDemo.js"></script>
     <script src="js/index.js"></script>
-    
+
 
     <!--测试用代码-->
     <script src="inspection/InspectionTask.js"></script>
-    <script src="inspection/data.js"></script>
     <script src="inspection/sample.js"></script>
+    <script src="inspection/ViewUtil.js"></script>
 
 
     <script type="text/javascript">
@@ -100,25 +100,11 @@
             if (!map) return;
             let switchControl = $('#switch2D3D');
             if (switchControl.val() == '切换到二维') {
-                map.setCameraView({
-                    lat: 31.8187,
-                    lng: 117.1808,
-                    alt: 10000
-                }, {
-                    complete: () => {
-                        map.scene.mode = Cesium.SceneMode.SCENE2D;
-                    }
-                });
+                changeCameraView(1);
                 switchControl.val('切换到三维')
             } else {
                 map.scene.mode = Cesium.SceneMode.SCENE3D;
-                map.setCameraView({
-                    lat: 31.686288,
-                    lng: 117.229619,
-                    alt: 11333.9,
-                    heading: 359.2,
-                    pitch: -39.5
-                });
+                changeCameraView(2);
                 switchControl.val('切换到二维')
             }
         }
@@ -132,13 +118,7 @@
         // 默认视角
         function flyToView1() {
             map.trackedEntity = undefined;
-            map.setCameraView({
-                lat: 31.77873,
-                lng: 117.159108,
-                alt: 3146.7,
-                heading: 29.4,
-                pitch: -28.9
-            });
+           changeCameraView(0);
         }
 
         // 守方视角
@@ -161,9 +141,14 @@
 
         // 开始演示任务1
         function startTask1() {
+            
+            changeCameraView(0);
 
-            taskOptions.disposalType = 2;  // 处置类型 1干扰 2打击
-            taskOptions.modelType = 1;   // 模型类型 1固定翼无人机 四旋翼无人机
+            let taskInfo = {
+                disposalType: 2,  // 处置类型 1干扰 2打击
+                modelType: 1  // 模型类型 1固定翼无人机 四旋翼无人机
+            }
+            Object.assign(taskOptions, taskInfo);
 
             runTask(true, taskOptions);
         }
@@ -171,8 +156,13 @@
         // 开始演示任务2
         function startTask2() {
 
-            taskOptions.disposalType = 1;  // 处置类型 1干扰 2打击
-            taskOptions.modelType = 2;   // 模型类型 1固定翼无人机 四旋翼无人机
+            changeCameraView(0);
+
+            let taskInfo = {
+                disposalType: 1, 
+                modelType: 2  
+            }
+            Object.assign(taskOptions, taskInfo);
 
             runTask(true, taskOptions);
         }

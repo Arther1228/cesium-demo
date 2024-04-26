@@ -14,18 +14,19 @@ class InspectionTask {
     this.DronePositions = options.DronePositions;
     this.droneSwarm = options.droneSwarm;
 
+    this.init();
+
   }
 
   /**
-    * 无人机开始飞行
+    * 初始化飞行路径和时间
     */
-  startMove() {
+  init() {
 
     let droneGraphic = this.droneSwarm.graphic;
 
     // 运动
     let positionProperty = new Cesium.SampledPositionProperty();
-    let orientationProperty = new Cesium.SampledProperty(Cesium.Quaternion);
 
     // 遍历位置集合
     this.DronePositions.map(dronePosition => {
@@ -35,24 +36,25 @@ class InspectionTask {
       let position = Cesium.Cartesian3.fromDegrees(dronePosition.lng, dronePosition.lat, dronePosition.height);
 
       positionProperty.addSample(time, position);
-      orientationProperty.addSample(time, Cesium.Transforms.headingPitchRollQuaternion(
-        Cesium.Cartesian3.fromDegrees(dronePosition.lng, dronePosition.lat, dronePosition.height),
-        new Cesium.HeadingPitchRoll(
-          Cesium.Math.toRadians(dronePosition.heading),
-          Cesium.Math.toRadians(dronePosition.pitch),
-          Cesium.Math.toRadians(dronePosition.roll || 0)
-        )
-      ));
+
     });
 
     // 无人机位置
     droneGraphic.position = positionProperty;
-    // droneGraphic.orientation = orientationProperty;
-
-    sceneClock.startAnimate();
 
   }
 
+  /**
+   * 无人机开始巡检
+   */
+  startMove() {
+    sceneClock.startAnimate();
+  }
+
+
+  /**
+   * 清理
+   */
   dispose() {
 
     if (this.droneSwarm) {
