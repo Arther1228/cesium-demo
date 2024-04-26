@@ -7,8 +7,9 @@ class DroneSwarm {
      */
     constructor(options) {
 
-        this.graphicLayer = options.graphicLayer;
         this.modelType = options.modelType == undefined ? 1 : options.modelType;
+        this.graphicLayer = options.graphicLayer;
+        
 
         // 之前的演示任务因为抽样会设置坐标,所以并没有用到这里的参数
         this.lng = options.lng;

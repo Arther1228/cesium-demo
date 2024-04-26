@@ -2,10 +2,24 @@
 
 let InspectionOptions = {
 
+    // 无人机起始状态
+    DroneAttr: {
+        modelType: 2,
+        lng: 117.092826,
+        lat: 31.823636,
+        height: 0    
+    },
+
     // 无人机飞行路线时间点及坐标集合
     DronePositions: [
-        { // 时间点1
+        { // 时间点
             time: '2024-01-22 12:00:00',
+            lng: 117.092826,
+            lat: 31.823636,
+            height: 0
+        },
+        { // 时间点
+            time: '2024-01-22 12:00:02',
             lng: 117.092826,
             lat: 31.823636,
             height: 1.5,
