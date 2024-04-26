@@ -33,7 +33,6 @@ function loadModel() {
 
 // 巡检任务
 function goInspectionTask() {
-
     console.log('start inspection task...')
 
     clearTask();
@@ -43,25 +42,23 @@ function goInspectionTask() {
     let configUrl = "config/inspection.json";
     mars3d.Util.fetchJson({ url: configUrl })
         .then((inspectionOptions) => {
-
             // 加载无人机模型
-            Object.assign(inspectionOptions.DroneAttr, { graphicLayer: demoGraphicLayer })
-            let droneSwarmInstance = new DroneSwarm(inspectionOptions.DroneAttr);
+            Object.assign(inspectionOptions.DroneInfo, { graphicLayer: demoGraphicLayer })
+            let droneSwarmInstance = new DroneSwarm(inspectionOptions.DroneInfo);
 
             // 开始巡检任务
             let taskOptions = {
                 map: map,
+                graphicLayer: demoGraphicLayer,
                 DronePositions: inspectionOptions.DronePositions,
                 droneSwarm: droneSwarmInstance,
-                graphicLayer: demoGraphicLayer
+                DroneInfo: inspectionOptions.DroneInfo, 
+                InspectTaskInfo: inspectionOptions.InspectTaskInfo
             }
             setTimeout(() => {
-
                 let inspectionTask = new InspectionTask(taskOptions);
                 inspectionTask.startMove();
-
                 taskArray.push(inspectionTask);
-
             }, 3000);
         })
         .catch(function (error) {
