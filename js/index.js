@@ -47,9 +47,12 @@ function initMap(options) {
     map.addLayer(demoGraphicLayer);
     Object.assign(taskOptions, { graphicLayer: demoGraphicLayer });
 
+    let taskStartTime = Cesium.JulianDate.fromDate(new Date(2024, 0, 22, 12));
+
     // 时钟
     sceneClock = new SceneClock({
         map: map,
+        start: taskStartTime
     });
 
     // 只演示雷达扫描

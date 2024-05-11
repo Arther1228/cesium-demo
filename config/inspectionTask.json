@@ -1,0 +1,219 @@
+{
+    "DroneInfo": {
+        "modelType": 2,
+        "lng": 117.094911,
+        "lat": 31.823849,
+        "height": 38
+    },
+    "InspectTaskInfo": {
+        "speed": 10,
+        "timeAbs": 0.5,
+        "stayTime": 8,
+        "clockMultiplier": 6
+    },
+    "FireInfo": {
+        "lng": 117.095078,
+        "lat": 31.82481,
+        "height": 28,
+        "startFireShootIndex": 9,
+        "fireAlarmShootIndex": 9,
+        "fireAlarmDelayTime": 8
+    },
+    "DronePositions": [
+        {
+            "shootId": 0,
+            "shootName": "机巢检测",
+            "lng": 117.094911,
+            "lat": 31.823849,
+            "height": 38,
+            "isShoot": false,
+            "isBoxShow": true
+        },
+        {
+            "shootId": 1,
+            "shootName": "无人机起飞",
+            "lng": 117.094911,
+            "lat": 31.823849,
+            "height": 98,
+            "isShoot": true,
+            "isBoxShow": true
+        },
+        {
+            "shootId": 2,
+            "shootName": "到达食堂东南侧巡更点2",
+            "lng": 117.094839,
+            "lat": 31.823180,
+            "height": 98,
+            "isShoot": true,
+            "isBoxShow": true
+        },
+        {
+            "shootId": 3,
+            "shootName": "到达南门巡更点",
+            "lng": 117.092826,
+            "lat": 31.8231850,
+            "height": 98,
+            "isShoot": true,
+            "isBoxShow": true
+        },
+        {
+            "shootId": 4,
+            "shootName": "到达南门西巡更点",
+            "lng": 117.090502,
+            "lat": 31.823184,
+            "height": 98,
+            "isShoot": true,
+            "isBoxShow": true
+        },
+        {
+            "shootId": 5,
+            "shootName": "到达西北角巡更点1",
+            "lng": 117.090502,
+            "lat": 31.826611,
+            "height": 98,
+            "isShoot": true,
+            "isBoxShow": true
+        },
+        {
+            "shootId": 6,
+            "shootName": "到达东北角巡更点2",
+            "lng": 117.090502,
+            "lat": 31.826611,
+            "height": 98,
+            "isShoot": true,
+            "isBoxShow": true
+        },
+        {
+            "shootId": 7,
+            "shootName": "到达正北巡更点",
+            "lng": 117.094168,
+            "lat": 31.826634,
+            "height": 98,
+            "isShoot": true,
+            "isBoxShow": true
+        },
+        {
+            "shootId": 8,
+            "shootName": "到达食堂北面巡更点",
+            "lng": 117.094167,
+            "lat": 31.824649,
+            "height": 98,
+            "isShoot": true,
+            "isBoxShow": true
+        },
+        {
+            "shootId": 9,
+            "shootName": "到达食堂北面巡更点",
+            "lng": 117.094906,
+            "lat": 31.8246489,
+            "height": 98,
+            "isShoot": true,
+            "isBoxShow": true
+        },
+        {
+            "shootId": 10,
+            "shootName": "返回降落点",
+            "lng": 117.094911,
+            "lat": 31.823849,
+            "height": 98,
+            "isShoot": true,
+            "isBoxShow": true
+        },
+        {
+            "shootId": 11,
+            "shootName": "无人机降落",
+            "lng": 117.094911,
+            "lat": 31.823849,
+            "height": 38,
+            "isShoot": true,
+            "isBoxShow": false
+        }
+    ],
+    "ViewPositions": [
+        {
+            "lat": 31.819217,
+            "lng": 117.095543,
+            "alt": 358.9,
+            "heading": 346.2,
+            "pitch": -30.4,
+            "duration": 8,
+            "stop": 30
+        },
+        {
+            "viewId": 2,
+            "lng": 117.091228,
+            "lat": 31.819176,
+            "alt": 383.9,
+            "heading": 2.1,
+            "pitch": -32.1,
+            "duration": 20,
+            "stop": 15
+        },
+        {
+            "viewId": 3,
+            "lng": 117.085699,
+            "lat": 31.824101,
+            "alt": 396.9,
+            "heading": 87.1,
+            "pitch": -32.4,
+            "duration": 30,
+            "stop": 15
+        },
+        {
+            "viewId": 4,
+            "lng": 117.087566,
+            "lat": 31.82962,
+            "alt": 380.4,
+            "heading": 139.5,
+            "pitch": -32.1,
+            "duration": 20,
+            "stop": 15
+        },
+        {
+            "viewId": 5,
+            "lat": 31.83054,
+            "lng": 117.0936,
+            "alt": 425.8,
+            "heading": 175,
+            "pitch": -32.3,
+            "duration": 15,
+            "stop": 15
+        },
+        {
+            "lat": 31.828445,
+            "lng": 117.098785,
+            "alt": 296.7,
+            "heading": 234.7,
+            "pitch": -25.2,
+            "duration": 15,
+            "stop": 15
+        },
+        {
+            "lat": 31.826238,
+            "lng": 117.099964,
+            "alt": 316.8,
+            "heading": 261.9,
+            "pitch": -28,
+            "duration": 15,
+            "stop": 15
+        },
+        {
+            "lat": 31.8212,
+            "lng": 117.098399,
+            "alt": 387.9,
+            "heading": 316.7,
+            "pitch": -35.3,
+            "duration": 10,
+            "stop": 15
+        },
+        {
+            "lat": 31.819217,
+            "lng": 117.095543,
+            "alt": 358.9,
+            "heading": 346.2,
+            "pitch": -30.4,
+            "duration": 8,
+            "stop": 15
+        }
+    ]
+}

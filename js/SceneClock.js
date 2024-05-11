@@ -10,7 +10,7 @@ class SceneClock {
 
         this.map = options.map;
 
-        this.start = Cesium.JulianDate.fromDate(new Date(2024, 0, 22, 12));
+        this.start = options.start;
         this.stop = Cesium.JulianDate.addSeconds(this.start, 100, new Cesium.JulianDate());
 
 
@@ -27,15 +27,36 @@ class SceneClock {
 
     }
 
-
     /**
      * 开始动画效果
      */
     startAnimate() {
-
         this.map.clock.shouldAnimate = true;
         this.map.clock.currentTime = this.start.clone();
+    }
 
+    /**
+     * 设置倍速
+     * @param {*} multiplier 
+     */
+    setMultiplier(multiplier) {
+        this.map.clock.multiplier = multiplier;
+    }
+
+    /**
+     * 增加事件监听
+     * @param {*} event 
+     */
+    addEventListener(event) {
+        this.map.clock.onTick.addEventListener(event);
+    }
+
+    /**
+     * 移除事件监听
+     * @param {*} event 
+     */
+    removeEventListener(event) {
+        this.map.clock.onTick.removeEventListener(event);
     }
 
 }

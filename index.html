@@ -66,7 +66,7 @@
         style="position:absolute; left:80px; top:50px; background-color:transparent; width:1200px; height:30px; z-index:99998; border:solid 1px transparent;">
         <input type="button" onclick="runFly()" value="模拟起飞" />
         <input type="button" onclick="loadModel()" value="加载模型" />
-        <input type="button" onclick="goInspectionTask()" value="巡检任务" />
+        <input type="button" onclick="goInspectionTask()" value="园区巡检" />
 
     </div>
 
@@ -92,6 +92,8 @@
     <script src="inspection/InspectionTask.js"></script>
     <script src="inspection/inspect.js"></script>
     <script src="inspection/ViewUtil.js"></script>
+    <script src="inspection/RouteChannel.js"></script>
+    <script src="inspection/RoutVolumeEntity.js"></script>
 
 
     <script type="text/javascript">
@@ -118,7 +120,7 @@
         // 默认视角
         function flyToView1() {
             map.trackedEntity = undefined;
-           changeCameraView(0);
+            changeCameraView(0);
         }
 
         // 守方视角
@@ -141,7 +143,7 @@
 
         // 开始演示任务1
         function startTask1() {
-            
+
             changeCameraView(0);
 
             let taskInfo = {
@@ -159,8 +161,8 @@
             changeCameraView(0);
 
             let taskInfo = {
-                disposalType: 1, 
-                modelType: 2  
+                disposalType: 1,
+                modelType: 2
             }
             Object.assign(taskOptions, taskInfo);
 

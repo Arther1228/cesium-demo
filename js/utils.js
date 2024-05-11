@@ -174,3 +174,174 @@ function findPosition(time, positions) {
         }
     }
 }
+
+
+function formatDateTime(date, format) {
+    const o = {
+      'M+': date.getMonth() + 1, // 月份
+      'd+': date.getDate(), // 日
+      'h+': date.getHours() % 12 === 0 ? 12 : date.getHours() % 12, // 小时
+      'H+': date.getHours(), // 小时
+      'm+': date.getMinutes(), // 分
+      's+': date.getSeconds(), // 秒
+      'q+': Math.floor((date.getMonth() + 3) / 3), // 季度
+      S: date.getMilliseconds(), // 毫秒
+      a: date.getHours() < 12 ? '上午' : '下午', // 上午/下午
+      A: date.getHours() < 12 ? 'AM' : 'PM', // AM/PM
+    };
+    if (/(y+)/.test(format)) {
+      format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+    }
+    for (let k in o) {
+      if (new RegExp('(' + k + ')').test(format)) {
+        format = format.replace(
+          RegExp.$1,
+          RegExp.$1.length === 1 ? o[k] : ('00' + o[k]).substr(('' + o[k]).length)
+        );
+      }
+    }
+    return format;
+  }
+  
+  //计算时间差
+  function timeDiff(mapDateTime, dateTime) {
+    let mapDateTimeTemp = Cesium.JulianDate.toDate(mapDateTime).getTime();
+    let dateTimeTemp = string2Date(dateTime).getTime();
+    return dateTimeTemp - mapDateTimeTemp;
+  }
+  
+  // 获取圆形范围坐标
+  function getCircleOutPositions(position, param) {
+    return mars3d.PolyUtil.getEllipseOuterPositions({ position, ...param })
+  }
+  
+  //空间两点距离计算函数
+  function getSpaceDistance(position1, position2) {
+    var distance = 0;
+    var point1cartographic = Cesium.Cartographic.fromCartesian(position1);
+    var point2cartographic = Cesium.Cartographic.fromCartesian(position2);
+    /**根据经纬度计算出距离**/
+    var geodesic = new Cesium.EllipsoidGeodesic();
+    geodesic.setEndPoints(point1cartographic, point2cartographic);
+    var s = geodesic.surfaceDistance;
+    //console.log(Math.sqrt(Math.pow(distance, 2) + Math.pow(endheight, 2)));
+    //返回两点之间的距离
+    s = Math.sqrt(Math.pow(s, 2) + Math.pow(point2cartographic.height - point1cartographic.height, 2));
+    distance = distance + s;
+    return distance.toFixed(2);
+  }
+  
+  /**
+   * 根据两个坐标点,获取Heading(朝向)
+   * @posA [lng,lat]
+   * @returns 
+   */
+  function getHeadingByLngLat(posA, posB) {
+    var pointA = Cesium.Cartesian3.fromDegrees(posA[0], posA[1], 0)
+    var pointB = Cesium.Cartesian3.fromDegrees(posB[0], posB[1], 0)
+    //建立以点A为原点，X轴为east,Y轴为north,Z轴朝上的坐标系
+    const transform = Cesium.Transforms.eastNorthUpToFixedFrame(pointA);
+    //向量AB
+    const positionvector = Cesium.Cartesian3.subtract(pointB, pointA, new Cesium.Cartesian3());
+    //因transform是将A为原点的eastNorthUp坐标系中的点转换到世界坐标系的矩阵
+    //AB为世界坐标中的向量
+    //因此将AB向量转换为A原点坐标系中的向量，需乘以transform的逆矩阵。
+    const vector = Cesium.Matrix4.multiplyByPointAsVector(
+      Cesium.Matrix4.inverse(transform, new Cesium.Matrix4()),
+      positionvector,
+      new Cesium.Cartesian3()
+    );
+    //归一化
+    const direction = Cesium.Cartesian3.normalize(vector, new Cesium.Cartesian3());
+    //heading
+    let heading = Math.atan2(direction.y, direction.x) - Cesium.Math.PI_OVER_TWO;
+    heading = Cesium.Math.TWO_PI - Cesium.Math.zeroToTwoPi(heading);
+    return Cesium.Math.toDegrees(heading);
+  }
+  
+  //根据经纬度、方向、距离，数量,生成点位集合
+  function generatePoints(lng, lat, angle, length, count) {
+    var aa = []
+    for (let i = 0; i <= count; i++) {
+      var point = getNextPosition(lng, lat, angle, length * i)
+      var p = toDegrees(point)
+      aa.push({
+        lng: p.lng,
+        lat: p.lat,
+        alt: 120
+      })
+    }
+    return aa
+  }
+  /**
+   * 生成航路
+   */
+  function generateBox(posA, posB, alt, length, color, angle) {
+    var positionA = Cesium.Cartesian3.fromDegrees(posA[0], posA[1], 0)
+    var positionB = Cesium.Cartesian3.fromDegrees(posB[0], posB[1], 0)
+    var distance = getSpaceDistance(positionA, positionB)
+    var aa = []
+    var count = 0
+    while (distance >= length * count) {
+      var point = getNextPosition(posA[0], posA[1], angle, length * count)
+      var nextPoint = toDegrees(point)
+      aa.push({
+        lng: nextPoint.lng,
+        lat: nextPoint.lat,
+        alt: alt,
+        color: color
+      })
+      count++
+    }
+    return aa
+  }
+  /**
+   * 生成航路
+   */
+  function generateBox2(posA, posB, alt1, alt2, alt, length, color, angle) {
+    var positionA = Cesium.Cartesian3.fromDegrees(posA[0], posA[1], 0)
+    var positionB = Cesium.Cartesian3.fromDegrees(posB[0], posB[1], 0)
+    var distance = getSpaceDistance(positionA, positionB)
+    var aa = []
+    var bb = []
+    var boxNum;
+    var count1 = 0
+    var count2 = 0
+    while (distance >= length * count1) {
+      var point = getNextPosition(posA[0], posA[1], angle, length * count1)
+      var nextPoint = toDegrees(point)
+      aa.push({
+        lng: nextPoint.lng,
+        lat: nextPoint.lat,
+        alt: alt,
+        color: color
+      })
+      count1++
+    }
+    boxNum = aa.length;
+    while (distance >= length * count2) {
+      var point = getNextPosition(posA[0], posA[1], angle, length * count2)
+      var nextPoint = toDegrees(point)
+      bb.push({
+        lng: nextPoint.lng,
+        lat: nextPoint.lat,
+        alt: ((alt2 - alt1) / boxNum) * count2 + alt1,
+        color: color
+      })
+      count2++
+    }
+    return bb
+  }
+  
+  function twoToCenter(point1, point2) {
+  
+    //坐标转换
+    let pointNew1 = Cesium.Cartesian3.fromDegrees(point1[0], point1[1], point1[2])
+  
+    let pointNew2 = Cesium.Cartesian3.fromDegrees(point2[0], point2[1], point1[2])
+  
+    //计算两个点的中心坐标
+    let centerPoint = Cesium.Cartesian3.lerp(pointNew1, pointNew2, 0.5, new Cesium.Cartesian3())
+  
+    return centerPoint
+  }
