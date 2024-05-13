@@ -1,46 +1,52 @@
-/**
- * 航道
- */
-var RoutVolumeEntity = (function () {
+class RoutVolumeEntity {
 
-    function RoutVolumeEntity(options) {
-        this.map = undefined;
-        this.graphicLayer = undefined;
-        this.color = "#ffff00"
-        this.radius = 10.0;
-        this.heading = 0;
-        let self = this;
-        self = Object.assign(this, options);
-        this.graphic = undefined
+    constructor(options) {
+
+        this.map = options.map;
+        this.graphicLayer = options.graphicLayer;
+        this.heading = options.heading || 0;
+        this.radius = options.radius || 10.0;
+        this.color = options.color || "#ffff00";
+        this.grphic = undefined;
+
     }
 
-    RoutVolumeEntity.prototype.createRoutVolume = function (points) {
-        var positions = []
+
+    /**
+     * 创建航道
+     */
+    createRoutVolume(points) {
+
+        let positions = []
         points.forEach(point => {
             let position = Cesium.Cartesian3.fromDegrees(point.lng, point.lat, point.alt)
             positions.push({
                 position: position,
                 style: {
                     dimensions: new Cesium.Cartesian3(this.radius, this.radius, this.radius),
-                    color: point.color||this.color,
+                    color: point.color || this.color,
                     opacity: 0.4,
-                    heading:this.heading,
+                    heading: this.heading,
                 }
             })
         });
 
-        var graphic = new mars3d.graphic.BoxCombine({
+        let graphic = new mars3d.graphic.BoxCombine({
             instances: positions,
         })
         this.graphicLayer.addGraphic(graphic)
-        this.graphic= graphic;
+        this.graphic = graphic;
+
     }
 
-    RoutVolumeEntity.prototype.dispose = function () {
+
+    /**
+     * 清理
+     */
+    dispose() {
+
         if (this.graphic) {
             this.graphicLayer.removeGraphic(this.graphic);
         }
     }
-
-    return RoutVolumeEntity;
-})();
+}
