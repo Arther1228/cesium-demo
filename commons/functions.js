@@ -2,7 +2,6 @@
 function runFly() {
 
     clearTask();
-    changeCameraView(3);
 
     let takeOff = new AircraftTakeoffDemo(map, demoGraphicLayer);
     takeOff.load(117.2442, 31.8537, 1200, 25);
@@ -16,7 +15,6 @@ function runFly() {
 function loadModel() {
 
     clearTask();
-    changeCameraView(3);
 
     let options = {
         map: map,
@@ -28,5 +26,7 @@ function loadModel() {
     }
 
     let droneSwarm = new DroneSwarm(options);
+
+    console.log("模型加载完毕");
 
 }

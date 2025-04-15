@@ -57,4 +57,8 @@ function initMap(options) {
 
     // 只演示雷达扫描
     // runTask(false, taskOptions);
+
+
+    // 在创建map后初始化
+    initMarkerUtils(map); // 初始化标记工具
 }
